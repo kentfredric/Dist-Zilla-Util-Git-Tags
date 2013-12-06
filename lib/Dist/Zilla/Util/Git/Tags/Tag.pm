@@ -25,7 +25,8 @@ sub sha1 {
   my ($self)  = @_;
   my (@sha1s) = $self->git->rev_parse( $self->name );
   if ( scalar @sha1s > 1 ) {
-    die "Fatal: rev-parse tagname returned multiple values";
+    require Carp;
+    return Carp::confess(q[Fatal: rev-parse tagname returned multiple values]);
   }
   return shift @sha1s;
 }
@@ -36,16 +37,18 @@ sub sha1 {
 
 sub verify {
   my ( $self, ) = @_;
-  $self->git->tag( '-v', $self->name );
+  return $self->git->tag( '-v', $self->name );
 }
 
 =method C<delete>
 
 =cut
 
+## no critic (ProhibitBuiltinHomonyms)
+
 sub delete {
   my ( $self, ) = @_;
-  $self->git->tag( '-d', $self->name );
+  return $self->git->tag( '-d', $self->name );
 }
 
 no Moose;
