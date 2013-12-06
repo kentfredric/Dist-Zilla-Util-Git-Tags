@@ -17,12 +17,16 @@ use Moose;
 =cut
 
 has name => ( isa => Str    =>, required   => 1, is => ro => );
-has git      => ( isa => Object =>, required   => 1, is => ro => );
-has sha1     => ( isa => Str    =>, lazy_build => 1, is => ro => );
+has git  => ( isa => Object =>, required   => 1, is => ro => );
+has sha1 => ( isa => Str    =>, lazy_build => 1, is => ro => );
 
 sub _build_sha1 {
-  my ($self) = @_;
-  $self->git->rev_parse( $self->tag_name );
+  my ($self)  = @_;
+  my (@sha1s) = $self->git->rev_parse( $self->name );
+  if ( scalar @sha1s > 1 ) {
+    die "Fatal: rev-parse tagname returned multiple values";
+  }
+  return shift @sha1s;
 }
 
 =method C<verify>
@@ -30,7 +34,8 @@ sub _build_sha1 {
 =cut
 
 sub verify {
-  $self->git->tag( '-v', $self->tag_name );
+  my ( $self, ) = @_;
+  $self->git->tag( '-v', $self->name );
 }
 
 =method C<delete>
@@ -38,7 +43,8 @@ sub verify {
 =cut
 
 sub delete {
-  $self->git->tag( '-d', $self->tag_name );
+  my ( $self, ) = @_;
+  $self->git->tag( '-d', $self->name );
 }
 
 no Moose;
