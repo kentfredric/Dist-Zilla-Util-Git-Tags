@@ -17,7 +17,6 @@ my $file = $repo->child('testfile');
 
 use Dist::Zilla::Util::Git::Wrapper;
 use Git::Wrapper;
-use Test::Fatal qw( exception );
 
 local $ENV{GIT_AUTHOR_NAME}  = 'A. U. Thor';
 local $ENV{GIT_AUTHOR_EMAIL} = 'author@example.org';
