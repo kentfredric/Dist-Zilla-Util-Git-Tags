@@ -1,0 +1,54 @@
+NAME
+    Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
+
+VERSION
+    version 0.001000
+
+SYNOPSIS
+    This tool basically gives a more useful interface around
+
+        git tag
+
+    Namely, each tag returned is a tag object, and you can view tag
+    properties with it.
+
+        use Dist::Zilla::Util::Git::Tags;
+
+        my $tags_finder = Dist::Zilla::Util::Git::Tags->new(
+            zilla => $self->zilla
+        );
+
+        my $tags = $tags_finder->tags;
+        for my $tag ( @{ $tags } ) {
+            printf "%s - %s\n", $tag->name, $tag->sha1;
+        }
+
+METHODS
+  "tags_for_rev"
+        $tag_finder->tags_for_rev( $sha1_or_commitish_etc );
+
+ATTRIBUTES
+  "tags"
+    An "ArrayRef" of "::Tags::Tag" objects
+
+  "git"
+    A Git::Wrapper ( or compatible ) repository.
+
+    Auto-Built from "zilla" with "::Util::Git::Wrapper"
+
+  "zilla"
+    A Dist::Zilla instance. Mandatory unless you passed "git"
+
+  "tag_sha1_map"
+    A "HashRef" of "sha1 => [ tag , tag ]" entries.
+
+AUTHOR
+    Kent Fredric <kentfredric@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2013 by Kent Fredric
+    <kentfredric@gmail.com>.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
