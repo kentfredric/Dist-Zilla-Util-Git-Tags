@@ -32,6 +32,10 @@ requires:
   strict: 0
   utf8: 0
   warnings: 0
+resources:
+  bugtracker: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags/issues
+  homepage: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags
+  repository: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags.git
 version: 0.001000
 x_BuiltWith:
   modules:

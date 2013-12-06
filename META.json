@@ -111,6 +111,17 @@
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags/issues"
+      },
+      "homepage" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags.git",
+         "web" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags"
+      }
+   },
    "version" : "0.001000",
    "x_BuiltWith" : {
       "modules" : {
