@@ -12,15 +12,16 @@ use Moose;
 
 =attr C<git>
 
-=attr C<sha1>
+=cut
+
+has name => ( isa => Str    =>, required => 1, is => ro => );
+has git  => ( isa => Object =>, required => 1, is => ro => );
+
+=method C<sha1>
 
 =cut
 
-has name => ( isa => Str    =>, required   => 1, is => ro => );
-has git  => ( isa => Object =>, required   => 1, is => ro => );
-has sha1 => ( isa => Str    =>, lazy_build => 1, is => ro => );
-
-sub _build_sha1 {
+sub sha1 {
   my ($self)  = @_;
   my (@sha1s) = $self->git->rev_parse( $self->name );
   if ( scalar @sha1s > 1 ) {
