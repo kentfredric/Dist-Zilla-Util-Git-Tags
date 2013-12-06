@@ -36,7 +36,7 @@ sub verify {
 }
 
 
-# no critic (ProhibitBuiltinHomonyms)
+## no critic (ProhibitBuiltinHomonyms)
 
 sub delete {
   my ( $self, ) = @_;
