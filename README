@@ -18,19 +18,27 @@ SYNOPSIS
             zilla => $self->zilla
         );
 
-        my $tags = $tags_finder->tags;
-        for my $tag ( @{ $tags } ) {
+        for my $tag ( $tags_finder->tags ) {
             printf "%s - %s\n", $tag->name, $tag->sha1;
         }
 
 METHODS
+  "tags"
+    A "List" of "::Tags::Tag" objects
+
+        my @tags = $tag_finder->tags();
+
+  "tag_sha1_map"
+    A "HashRef" of "sha1 => [ tag, tag ]" entries.
+
+        my $hash = $tag_finder->tag_sha1_map();
+
   "tags_for_rev"
+    A "List" of "::Tags::Tag" objects that point to the given "SHA1".
+
         $tag_finder->tags_for_rev( $sha1_or_commitish_etc );
 
 ATTRIBUTES
-  "tags"
-    An "ArrayRef" of "::Tags::Tag" objects
-
   "git"
     A Git::Wrapper ( or compatible ) repository.
 
@@ -38,9 +46,6 @@ ATTRIBUTES
 
   "zilla"
     A Dist::Zilla instance. Mandatory unless you passed "git"
-
-  "tag_sha1_map"
-    A "HashRef" of "sha1 => [ tag , tag ]" entries.
 
 AUTHOR
     Kent Fredric <kentfredric@gmail.com>
