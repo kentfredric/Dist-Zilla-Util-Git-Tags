@@ -15,8 +15,8 @@ BEGIN {
 use Moose;
 
 
-has name => ( isa => Str    =>, required   => 1, is => ro => );
-has git  => ( isa => Object =>, required   => 1, is => ro => );
+has name => ( isa => Str    =>, required => 1, is => ro => );
+has git  => ( isa => Object =>, required => 1, is => ro => );
 
 
 sub sha1 {
