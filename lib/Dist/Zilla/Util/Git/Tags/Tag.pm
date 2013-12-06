@@ -36,6 +36,8 @@ sub verify {
 }
 
 
+# no critic (ProhibitBuiltinHomonyms)
+
 sub delete {
   my ( $self, ) = @_;
   return $self->git->tag( '-d', $self->name );
