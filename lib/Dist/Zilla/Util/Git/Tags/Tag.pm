@@ -17,13 +17,14 @@ use Moose;
 
 has name => ( isa => Str    =>, required   => 1, is => ro => );
 has git  => ( isa => Object =>, required   => 1, is => ro => );
-has sha1 => ( isa => Str    =>, lazy_build => 1, is => ro => );
 
-sub _build_sha1 {
+
+sub sha1 {
   my ($self)  = @_;
   my (@sha1s) = $self->git->rev_parse( $self->name );
   if ( scalar @sha1s > 1 ) {
-    die "Fatal: rev-parse tagname returned multiple values";
+    require Carp;
+    return Carp::confess(q[Fatal: rev-parse tagname returned multiple values]);
   }
   return shift @sha1s;
 }
@@ -31,13 +32,13 @@ sub _build_sha1 {
 
 sub verify {
   my ( $self, ) = @_;
-  $self->git->tag( '-v', $self->name );
+  return $self->git->tag( '-v', $self->name );
 }
 
 
 sub delete {
   my ( $self, ) = @_;
-  $self->git->tag( '-d', $self->name );
+  return $self->git->tag( '-d', $self->name );
 }
 
 no Moose;
@@ -60,6 +61,8 @@ version 0.001000
 
 =head1 METHODS
 
+=head2 C<sha1>
+
 =head2 C<verify>
 
 =head2 C<delete>
@@ -69,8 +72,6 @@ version 0.001000
 =head2 C<name>
 
 =head2 C<git>
-
-=head2 C<sha1>
 
 =head1 AUTHOR
 

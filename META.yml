@@ -25,6 +25,7 @@ provides:
     file: lib/Dist/Zilla/Util/Git/Tags/Tag.pm
     version: 0.001000
 requires:
+  Carp: 0
   Dist::Zilla::Util::Git::Wrapper: 0
   Moose: 0
   MooseX::LazyRequire: 0
@@ -35,6 +36,7 @@ requires:
 version: 0.001000
 x_BuiltWith:
   modules:
+    Carp: 1.32
     Dist::Zilla::Plugin::Authority: 1.006
     Dist::Zilla::Plugin::AutoPrereqs: 5.006
     Dist::Zilla::Plugin::ConfirmRelease: 5.006
