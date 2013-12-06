@@ -7,7 +7,7 @@ BEGIN {
   $Dist::Zilla::Util::Git::Tags::Tag::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Tags::Tag::VERSION = '0.001000';
+  $Dist::Zilla::Util::Git::Tags::Tag::VERSION = '0.001001';
 }
 
 # ABSTRACT: A single tag object
@@ -59,7 +59,7 @@ Dist::Zilla::Util::Git::Tags::Tag - A single tag object
 
 =head1 VERSION
 
-version 0.001000
+version 0.001001
 
 =head1 METHODS
 
