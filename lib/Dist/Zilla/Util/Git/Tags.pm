@@ -28,7 +28,6 @@ Namely, each tag returned is a tag object, and you can view tag properties with 
 
 =cut
 
-
 =attr C<git>
 
 A Git::Wrapper ( or compatible ) repository.
@@ -41,8 +40,8 @@ A Dist::Zilla instance. Mandatory unless you passed C<git>
 
 =cut
 
-has 'git'          => ( isa => Object   =>, is => ro =>, lazy_build    => 1 );
-has 'zilla'        => ( isa => Object   =>, is => ro =>, lazy_required => 1 );
+has 'git'   => ( isa => Object =>, is => ro =>, lazy_build    => 1 );
+has 'zilla' => ( isa => Object =>, is => ro =>, lazy_required => 1 );
 
 sub _build_git {
   my ($self) = @_;
@@ -73,8 +72,8 @@ A C<List> of L<< C<::Tags::Tag> objects|Dist::Zilla::Util::Git::Tags::Tag >>
 =cut
 
 sub tags {
-    my ( $self ) = @_;
-    return $self->_mk_tags( $self->git->tag );
+  my ($self) = @_;
+  return $self->_mk_tags( $self->git->tag );
 }
 
 =method C<tag_sha1_map>
@@ -88,7 +87,7 @@ A C<HashRef> of C<< sha1 => [ L<< tag|Dist::Zilla::Util::Git::Tags::Tag >>,  L<<
 sub tag_sha1_map {
   my ($self) = @_;
 
-  my %hash ;
+  my %hash;
   for my $tag ( $self->tags ) {
     my $sha1 = $tag->sha1;
     if ( not exists $hash{$sha1} ) {
