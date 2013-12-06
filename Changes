@@ -1,6 +1,6 @@
 Release history for Dist-Zilla-Util-Git-Tags
 
-0.001001 2013-12-06T22:11:24Z
+0.001001 2013-12-06T22:35:20Z
  - Make tests more resilient to ENV indifference
 
 0.001000 2013-12-06T20:46:27Z
