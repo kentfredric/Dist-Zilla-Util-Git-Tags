@@ -89,6 +89,26 @@ sub tags {
   return $self->_mk_tags( $self->git->tag );
 }
 
+=method C<get_tag>
+
+    my ($first_matching) = $tags->get_tag('1.000');
+    my (@all_matching) = $tags->get_tag('1.*');
+
+=cut
+
+sub get_tag {
+  my ( $self, $name ) = @_;
+  my @out;
+  $self->_for_each_ref(
+    'refs/tags/' . $name,
+    sub {
+      my ( $sha1, $name ) = @_;
+      push @out, $self->_mk_tag($name);
+    }
+  );
+  return @out;
+}
+
 =method C<tag_sha1_map>
 
 A C<HashRef> of C<< sha1 => [ L<< tag|Dist::Zilla::Util::Git::Tags::Tag >>,  L<< tag|Dist::Zilla::Util::Git::Tags::Tag >> ] >> entries.
