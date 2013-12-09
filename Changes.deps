@@ -1,4 +1,9 @@
-0.002000
+0.003000
+ [Added / runtime requires]
+ - Dist::Zilla::Util::Git::Refs
+ - Dist::Zilla::Util::Git::Refs::Ref
+
+0.002000 2013-12-09T05:36:42Z
  [Added / test requires]
  - Test::Fatal
 
