@@ -58,6 +58,19 @@ sub _mk_tag {
   );
 }
 
+sub _for_each_ref {
+  my ( $self, $refpragma, $code ) = @_;
+  for my $commdata ( $self->git->for_each_ref( $refpragma, '--format=%(objectname) %(refname)' ) ) {
+    if ( $commdata =~ qr{ \A ([^ ]+) [ ] refs/tags/ ( .+ ) \z }msx ) {
+      $code->( $1, $2 );
+      next;
+    }
+    require Carp;
+    Carp::confess( 'Regexp failed to parse a line from `git for-each-ref` :' . $commdata );
+  }
+  return;
+}
+
 sub _mk_tags {
   my ( $self, @tags ) = @_;
   return map { $self->_mk_tag($_) } @tags;
