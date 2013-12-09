@@ -8,27 +8,17 @@ package Dist::Zilla::Util::Git::Tags::Tag;
 
 use Moose;
 
+extends 'Dist::Zilla::Util::Git::Refs::Ref';
+
 =attr C<name>
 
 =attr C<git>
 
 =cut
 
-has name => ( isa => Str    =>, required => 1, is => ro => );
-has git  => ( isa => Object =>, required => 1, is => ro => );
-
-=method C<sha1>
-
-=cut
-
-sub sha1 {
-  my ($self)  = @_;
-  my (@sha1s) = $self->git->rev_parse( $self->name );
-  if ( scalar @sha1s > 1 ) {
-    require Carp;
-    return Carp::confess(q[Fatal: rev-parse tagname returned multiple values]);
-  }
-  return shift @sha1s;
+sub refname {
+  my ($self) = @_;
+  return 'refs/tags/' . $self->name;
 }
 
 =method C<verify>
