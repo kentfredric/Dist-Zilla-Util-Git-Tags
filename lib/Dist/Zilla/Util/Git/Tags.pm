@@ -63,10 +63,9 @@ sub get_tag {
   my ( $self, $name ) = @_;
   my @out;
   $self->_for_each_ref(
-    'refs/tags/' . $name,
-    sub {
-      my ( $sha1, $name ) = @_;
-      push @out, $self->_mk_tag($name);
+    'refs/tags/' . $name => sub {
+      my ( $sha1, $tag_name ) = @_;
+      push @out, $self->_mk_tag($tag_name);
     }
   );
   return @out;
