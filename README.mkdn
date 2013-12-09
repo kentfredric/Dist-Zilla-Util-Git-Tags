@@ -4,7 +4,7 @@ Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 # VERSION
 
-version 0.001002
+version 0.002000
 
 # SYNOPSIS
 
