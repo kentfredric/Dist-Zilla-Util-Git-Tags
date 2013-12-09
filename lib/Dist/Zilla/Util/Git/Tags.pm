@@ -86,7 +86,7 @@ A C<List> of L<< C<::Tags::Tag> objects|Dist::Zilla::Util::Git::Tags::Tag >>
 
 sub tags {
   my ($self) = @_;
-  return $self->_mk_tags( $self->git->tag );
+  return $self->get_tag(q[*]);
 }
 
 =method C<get_tag>
