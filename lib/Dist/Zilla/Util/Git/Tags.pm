@@ -6,7 +6,7 @@ BEGIN {
   $Dist::Zilla::Util::Git::Tags::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Tags::VERSION = '0.001002';
+  $Dist::Zilla::Util::Git::Tags::VERSION = '0.002000';
 }
 
 # ABSTRACT: Extract all tags from a repository
@@ -120,7 +120,7 @@ Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 =head1 VERSION
 
-version 0.001002
+version 0.002000
 
 =head1 SYNOPSIS
 
