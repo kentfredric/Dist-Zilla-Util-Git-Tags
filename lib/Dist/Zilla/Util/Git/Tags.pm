@@ -125,7 +125,15 @@ A C<List> of L<< C<::Tags::Tag> objects|Dist::Zilla::Util::Git::Tags::Tag >> tha
 
 sub tags_for_rev {
   my ( $self, $rev ) = @_;
-  return $self->_mk_tags( $self->git->tag( '--points-at', $rev ) );
+  my (@shas) = $self->git->rev_parse($rev);
+  if ( scalar @shas != 1 ) {
+    require Carp;
+    Carp::croak("Could not resolve a SHA1 from rev $rev");
+  }
+  my ($sha) = shift @shas;
+  my $map = $self->tag_sha1_map;
+  return unless exists $map->{$sha};
+  return @{ $map->{$sha} };
 }
 
 __PACKAGE__->meta->make_immutable;
