@@ -17,7 +17,7 @@ my %module_build_args = (
     "Kent Fredric <kentfredric\@gmail.com>"
   ],
   "dist_name" => "Dist-Zilla-Util-Git-Tags",
-  "dist_version" => "0.001001",
+  "dist_version" => "0.002000",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Util::Git::Tags",
   "recommends" => {},
@@ -36,6 +36,7 @@ my %module_build_args = (
   "test_requires" => {
     "Git::Wrapper" => 0,
     "Path::Tiny" => 0,
+    "Test::Fatal" => 0,
     "Test::More" => "1.001002"
   }
 );
@@ -45,6 +46,7 @@ my %fallback_build_requires = (
   "Git::Wrapper" => 0,
   "Module::Build" => "0.4203",
   "Path::Tiny" => 0,
+  "Test::Fatal" => 0,
   "Test::More" => "1.001002"
 );
 

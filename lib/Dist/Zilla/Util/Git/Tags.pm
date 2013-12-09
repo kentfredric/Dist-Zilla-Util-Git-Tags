@@ -6,7 +6,7 @@ BEGIN {
   $Dist::Zilla::Util::Git::Tags::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Tags::VERSION = '0.001001';
+  $Dist::Zilla::Util::Git::Tags::VERSION = '0.002000';
 }
 
 # ABSTRACT: Extract all tags from a repository
@@ -34,6 +34,19 @@ sub _mk_tag {
   );
 }
 
+sub _for_each_ref {
+  my ( $self, $refpragma, $code ) = @_;
+  for my $commdata ( $self->git->for_each_ref( $refpragma, '--format=%(objectname) %(refname)' ) ) {
+    if ( $commdata =~ qr{ \A ([^ ]+) [ ] refs/tags/ ( .+ ) \z }msx ) {
+      $code->( $1, $2 );
+      next;
+    }
+    require Carp;
+    Carp::confess( 'Regexp failed to parse a line from `git for-each-ref` :' . $commdata );
+  }
+  return;
+}
+
 sub _mk_tags {
   my ( $self, @tags ) = @_;
   return map { $self->_mk_tag($_) } @tags;
@@ -42,7 +55,20 @@ sub _mk_tags {
 
 sub tags {
   my ($self) = @_;
-  return $self->_mk_tags( $self->git->tag );
+  return $self->get_tag(q[*]);
+}
+
+
+sub get_tag {
+  my ( $self, $name ) = @_;
+  my @out;
+  $self->_for_each_ref(
+    'refs/tags/' . $name => sub {
+      my ( $sha1, $tag_name ) = @_;
+      push @out, $self->_mk_tag($tag_name);
+    }
+  );
+  return @out;
 }
 
 
@@ -50,20 +76,30 @@ sub tag_sha1_map {
   my ($self) = @_;
 
   my %hash;
-  for my $tag ( $self->tags ) {
-    my $sha1 = $tag->sha1;
-    if ( not exists $hash{$sha1} ) {
-      $hash{$sha1} = [];
+  $self->_for_each_ref(
+    'refs/tags/*' => sub {
+      my ( $sha1, $name ) = @_;
+      if ( not exists $hash{$sha1} ) {
+        $hash{$sha1} = [];
+      }
+      push @{ $hash{$sha1} }, $self->_mk_tag($name);
     }
-    push @{ $hash{$sha1} }, $tag;
-  }
+  );
   return \%hash;
 }
 
 
 sub tags_for_rev {
   my ( $self, $rev ) = @_;
-  return $self->_mk_tags( $self->git->tag( '--points-at', $rev ) );
+  my (@shas) = $self->git->rev_parse($rev);
+  if ( scalar @shas != 1 ) {
+    require Carp;
+    Carp::croak("Could not resolve a SHA1 from rev $rev");
+  }
+  my ($sha) = shift @shas;
+  my $map = $self->tag_sha1_map;
+  return unless exists $map->{$sha};
+  return @{ $map->{$sha} };
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -83,7 +119,7 @@ Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 =head1 VERSION
 
-version 0.001001
+version 0.002000
 
 =head1 SYNOPSIS
 
@@ -110,6 +146,23 @@ Namely, each tag returned is a tag object, and you can view tag properties with 
 A C<List> of L<< C<::Tags::Tag> objects|Dist::Zilla::Util::Git::Tags::Tag >>
 
     my @tags = $tag_finder->tags();
+
+=head2 C<get_tag>
+
+    my ($first_matching) = $tags->get_tag('1.000');
+    my (@all_matching) = $tags->get_tag('1.*');
+
+Note: This can easily return multiple values.
+
+For instance, C<tags> is implemented as
+
+    my ( @tags ) = $branches->get_tag('*');
+
+Mostly, because the underlying mechanism is implemented in terms of L<< C<fnmatch(3)>|fnmatch(3) >>
+
+If the tag does not exist, or no tag match the expression, C<< get_tag >>  will return an empty list.
+
+So in the top example, C<match> is C<undef> if C<1.000> does not exist.
 
 =head2 C<tag_sha1_map>
 

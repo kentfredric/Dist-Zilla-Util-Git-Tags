@@ -25,6 +25,7 @@ my $file = $repo->child('testfile');
 
 use Dist::Zilla::Util::Git::Wrapper;
 use Git::Wrapper;
+use Test::Fatal qw(exception);
 
 my $git = Git::Wrapper->new( $tempdir->child('git-repo') );
 my $wrapper = Dist::Zilla::Util::Git::Wrapper->new( git => $git );
@@ -33,15 +34,19 @@ sub report_ctx {
   my (@lines) = @_;
   note explain \@lines;
 }
+my $tip;
 
-$wrapper->init();
-$file->touch;
-$wrapper->add('testfile');
-$wrapper->commit( '-m', 'Test Commit' );
-my ( $tip, ) = $wrapper->rev_parse('HEAD');
-$wrapper->tag( '0.1.0', $tip );
-$wrapper->tag( '0.1.1', $tip );
-pass('Git::Wrapper methods executed without failure');
+my $excp = exception {
+  $wrapper->init();
+  $file->touch;
+  $wrapper->add('testfile');
+  $wrapper->commit( '-m', 'Test Commit' );
+  ($tip,) = $wrapper->rev_parse('HEAD');
+  $wrapper->tag( '0.1.0', $tip );
+  $wrapper->tag( '0.1.1', $tip );
+};
+
+is( $excp, undef, 'Git::Wrapper methods executed without failure' ) or diag $excp;
 
 use Dist::Zilla::Util::Git::Tags;
 my $tag_finder = Dist::Zilla::Util::Git::Tags->new( git => $wrapper );

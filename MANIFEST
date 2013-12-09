@@ -31,6 +31,7 @@ maint-travis-ci/yamls/sterile2.yaml
 perlcritic.rc
 t/00-compile/lib_Dist_Zilla_Util_Git_Tags_Tag_pm.t
 t/00-compile/lib_Dist_Zilla_Util_Git_Tags_pm.t
+t/00-report-git-version.t
 t/000-report-versions-tiny.t
 t/basic.t
 weaver.ini

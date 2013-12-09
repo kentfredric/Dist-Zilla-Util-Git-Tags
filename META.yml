@@ -6,6 +6,7 @@ build_requires:
   Git::Wrapper: 0
   Module::Build: 0.4203
   Path::Tiny: 0
+  Test::Fatal: 0
   Test::More: 1.001002
 configure_requires:
   Module::Build: 0.4203
@@ -19,10 +20,10 @@ name: Dist-Zilla-Util-Git-Tags
 provides:
   Dist::Zilla::Util::Git::Tags:
     file: lib/Dist/Zilla/Util/Git/Tags.pm
-    version: 0.001001
+    version: 0.002000
   Dist::Zilla::Util::Git::Tags::Tag:
     file: lib/Dist/Zilla/Util/Git/Tags/Tag.pm
-    version: 0.001001
+    version: 0.002000
 requires:
   Carp: 0
   Dist::Zilla::Util::Git::Wrapper: 0
@@ -36,7 +37,7 @@ resources:
   bugtracker: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags/issues
   homepage: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags
   repository: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags.git
-version: 0.001001
+version: 0.002000
 x_BuiltWith:
   modules:
     Carp: 1.32
@@ -92,6 +93,7 @@ x_BuiltWith:
     Pod::Coverage::TrustPod: 0.100003
     Test::CPAN::Changes: 0.26
     Test::CPAN::Meta: 0.23
+    Test::Fatal: 0.013
     Test::Kwalitee: 1.17
     Test::More: 1.001002
     Test::Pod: 1.48
