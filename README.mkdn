@@ -4,7 +4,7 @@ Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 # VERSION
 
-version 0.002000
+version 0.003000
 
 # SYNOPSIS
 
@@ -72,6 +72,10 @@ Auto-Built from `zilla` with [`::Util::Git::Wrapper`](https://metacpan.org/pod/D
 ## `zilla`
 
 A Dist::Zilla instance. Mandatory unless you passed `git`
+
+## `refs`
+
+A Dist::Zilla::Util::Git::Refs instance, auto-built if not specified.
 
 # AUTHOR
 
