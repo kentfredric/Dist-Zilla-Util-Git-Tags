@@ -10,6 +10,31 @@ use Moose;
 
 extends 'Dist::Zilla::Util::Git::Refs::Ref';
 
+=method C<new_from_Ref>
+
+Convert a Git::Refs::Ref to a Git::Tags::Tag
+
+    my $tag = $class->new_from_Ref( $ref );
+
+=cut
+
+sub new_from_Ref {
+  my ( $class, $object ) = @_;
+  if ( not $object->can('name') ) {
+    require Carp;
+    return Carp::croak("Object $object does not respond to ->name, cannot Ref -> Tag");
+  }
+  my $name = $object->name;
+  if ( $name =~ qr{\Arefs/tags/(.+\z)}msx ) {
+    return $class->new(
+      git  => $object->git,
+      name => $1,
+    );
+  }
+  require Carp;
+  Carp::croak("Path $name is not in refs/tags/*, cannot convert to Tag object");
+}
+
 =attr C<name>
 
 =attr C<git>
