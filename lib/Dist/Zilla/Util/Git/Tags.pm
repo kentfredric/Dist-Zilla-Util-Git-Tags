@@ -101,13 +101,15 @@ sub tag_sha1_map {
   my ($self) = @_;
 
   my %hash;
-  for my $tag ( $self->tags ) {
-    my $sha1 = $tag->sha1;
-    if ( not exists $hash{$sha1} ) {
-      $hash{$sha1} = [];
+  $self->_for_each_ref(
+    'refs/tags/*' => sub {
+      my ( $sha1, $name ) = @_;
+      if ( not exists $hash{$sha1} ) {
+        $hash{$sha1} = [];
+      }
+      push @{ $hash{$sha1} }, $self->_mk_tag($name);
     }
-    push @{ $hash{$sha1} }, $tag;
-  }
+  );
   return \%hash;
 }
 
