@@ -41,7 +41,7 @@ my $excp = exception {
   $file->touch;
   $wrapper->add('testfile');
   $wrapper->commit( '-m', 'Test Commit' );
-  $tip = $wrapper->rev_parse('HEAD');
+  ($tip,) = $wrapper->rev_parse('HEAD');
   $wrapper->tag( '0.1.0', $tip );
   $wrapper->tag( '0.1.1', $tip );
 };
