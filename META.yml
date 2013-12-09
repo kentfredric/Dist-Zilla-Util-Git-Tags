@@ -20,10 +20,10 @@ name: Dist-Zilla-Util-Git-Tags
 provides:
   Dist::Zilla::Util::Git::Tags:
     file: lib/Dist/Zilla/Util/Git/Tags.pm
-    version: 0.002001
+    version: 0.003000
   Dist::Zilla::Util::Git::Tags::Tag:
     file: lib/Dist/Zilla/Util/Git/Tags/Tag.pm
-    version: 0.002001
+    version: 0.003000
 requires:
   Carp: 0
   Dist::Zilla::Util::Git::Refs: 0
@@ -39,7 +39,7 @@ resources:
   bugtracker: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags/issues
   homepage: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags
   repository: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags.git
-version: 0.002001
+version: 0.003000
 x_BuiltWith:
   modules:
     Carp: 1.32
