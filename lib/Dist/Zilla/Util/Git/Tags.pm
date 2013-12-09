@@ -94,6 +94,18 @@ sub tags {
     my ($first_matching) = $tags->get_tag('1.000');
     my (@all_matching) = $tags->get_tag('1.*');
 
+Note: This can easily return multiple values.
+
+For instance, C<tags> is implemented as
+
+    my ( @tags ) = $branches->get_tag('*');
+
+Mostly, because the underlying mechanism is implemented in terms of L<< C<fnmatch(3)>|fnmatch(3) >>
+
+If the tag does not exist, or no tag match the expression, C<< get_tag >>  will return an empty list.
+
+So in the top example, C<match> is C<undef> if C<1.000> does not exist.
+
 =cut
 
 sub get_tag {
