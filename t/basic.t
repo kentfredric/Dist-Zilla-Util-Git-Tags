@@ -41,7 +41,7 @@ my $excp = exception {
   $file->touch;
   $wrapper->add('testfile');
   $wrapper->commit( '-m', 'Test Commit' );
-  ($tip,) = $wrapper->rev_parse('HEAD');
+  ( $tip, ) = $wrapper->rev_parse('HEAD');
   $wrapper->tag( '0.1.0', $tip );
   $wrapper->tag( '0.1.1', $tip );
 };
@@ -58,6 +58,7 @@ for my $tag ( $tag_finder->tags ) {
 is( scalar keys %{ $tag_finder->tag_sha1_map }, 1, '1 tagged sha1' );
 is( scalar $tag_finder->tags_for_rev($tip),     2, '2 tags found from tags_for_rev' );
 for my $tag ( $tag_finder->tags_for_rev($tip) ) {
+  note $tag->name;
   is( $tag->sha1, $tip, 'Found tags report right sha1' );
 }
 done_testing;

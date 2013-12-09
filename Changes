@@ -1,5 +1,7 @@
 Release history for Dist-Zilla-Util-Git-Tags
 
+0.002001 2013-12-09T10:38:10Z
+
 0.002000 2013-12-09T05:36:42Z
  [Dependencies::Noteworthy]
  - Use Test::Fatal
