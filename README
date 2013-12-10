@@ -2,7 +2,7 @@ NAME
     Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 VERSION
-    version 0.002000
+    version 0.003000
 
 SYNOPSIS
     This tool basically gives a more useful interface around
@@ -64,6 +64,9 @@ ATTRIBUTES
 
   "zilla"
     A Dist::Zilla instance. Mandatory unless you passed "git"
+
+  "refs"
+    A Dist::Zilla::Util::Git::Refs instance, auto-built if not specified.
 
 AUTHOR
     Kent Fredric <kentfredric@gmail.com>

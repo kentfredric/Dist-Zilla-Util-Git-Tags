@@ -6,7 +6,7 @@ BEGIN {
   $Dist::Zilla::Util::Git::Tags::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Tags::VERSION = '0.002000';
+  $Dist::Zilla::Util::Git::Tags::VERSION = '0.003000';
 }
 
 # ABSTRACT: Extract all tags from a repository
@@ -18,6 +18,7 @@ use MooseX::LazyRequire;
 
 has 'git'   => ( isa => Object =>, is => ro =>, lazy_build    => 1 );
 has 'zilla' => ( isa => Object =>, is => ro =>, lazy_required => 1 );
+has 'refs'  => ( isa => Object =>, is => ro =>, lazy_build    => 1 );
 
 sub _build_git {
   my ($self) = @_;
@@ -25,50 +26,58 @@ sub _build_git {
   return Dist::Zilla::Util::Git::Wrapper->new( zilla => $self->zilla );
 }
 
-sub _mk_tag {
-  my ( $self, $name ) = @_;
+sub _build_refs {
+  my ($self) = @_;
+  require Dist::Zilla::Util::Git::Refs;
+  return Dist::Zilla::Util::Git::Refs->new( git => $self->git );
+}
+
+sub _to_tag {
+  my ( $self, $ref ) = @_;
   require Dist::Zilla::Util::Git::Tags::Tag;
-  return Dist::Zilla::Util::Git::Tags::Tag->new(
-    name => $name,
-    git  => $self->git,
-  );
+  return Dist::Zilla::Util::Git::Tags::Tag->new_from_Ref($ref);
 }
 
-sub _for_each_ref {
-  my ( $self, $refpragma, $code ) = @_;
-  for my $commdata ( $self->git->for_each_ref( $refpragma, '--format=%(objectname) %(refname)' ) ) {
-    if ( $commdata =~ qr{ \A ([^ ]+) [ ] refs/tags/ ( .+ ) \z }msx ) {
-      $code->( $1, $2 );
-      next;
-    }
-    require Carp;
-    Carp::confess( 'Regexp failed to parse a line from `git for-each-ref` :' . $commdata );
+sub _to_tags {
+  my ( $self, @refs ) = @_;
+  return map { $self->_to_tag($_) } @refs;
+}
+
+# There's 2 types of results that come back from git ls-remote
+#
+# tags, and heavy tags ( usually annotations )
+#
+# puretags look like
+#
+#    abffab foo         # pointer to the commit
+#
+# While heavy tags come in pairs
+#
+#   fabfab  foo         # heavy tag pointer
+#   abffab  foo^{}      # pointer to the actual commit
+#
+# However, we don't really care about the second half of the latter kind.
+#
+sub _grep_commit_pointers {
+  my ( $self, @refs ) = @_;
+  my (@out);
+  for my $ref (@refs) {
+    next if $ref->name =~ /[^][{][}]\z/msx;
+    push @out, $ref;
   }
-  return;
-}
-
-sub _mk_tags {
-  my ( $self, @tags ) = @_;
-  return map { $self->_mk_tag($_) } @tags;
+  return @out;
 }
 
 
 sub tags {
   my ($self) = @_;
-  return $self->get_tag(q[*]);
+  return $self->get_tag(q[**]);
 }
 
 
 sub get_tag {
   my ( $self, $name ) = @_;
-  my @out;
-  $self->_for_each_ref(
-    'refs/tags/' . $name => sub {
-      my ( $sha1, $tag_name ) = @_;
-      push @out, $self->_mk_tag($tag_name);
-    }
-  );
-  return @out;
+  return $self->_to_tags( $self->_grep_commit_pointers( $self->refs->get_ref( 'refs/tags/' . $name ) ) );
 }
 
 
@@ -76,15 +85,13 @@ sub tag_sha1_map {
   my ($self) = @_;
 
   my %hash;
-  $self->_for_each_ref(
-    'refs/tags/*' => sub {
-      my ( $sha1, $name ) = @_;
-      if ( not exists $hash{$sha1} ) {
-        $hash{$sha1} = [];
-      }
-      push @{ $hash{$sha1} }, $self->_mk_tag($name);
+  for my $tag ( $self->tags ) {
+    my $sha1 = $tag->sha1;
+    if ( not exists $hash{$sha1} ) {
+      $hash{$sha1} = [];
     }
-  );
+    push @{ $hash{$sha1} }, $tag;
+  }
   return \%hash;
 }
 
@@ -119,7 +126,7 @@ Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 =head1 VERSION
 
-version 0.002000
+version 0.003000
 
 =head1 SYNOPSIS
 
@@ -187,6 +194,10 @@ Auto-Built from C<zilla> with L<< C<::Util::Git::Wrapper>|Dist::Zilla::Util::Git
 =head2 C<zilla>
 
 A Dist::Zilla instance. Mandatory unless you passed C<git>
+
+=head2 C<refs>
+
+A Dist::Zilla::Util::Git::Refs instance, auto-built if not specified.
 
 =head1 AUTHOR
 

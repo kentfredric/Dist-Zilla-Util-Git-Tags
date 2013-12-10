@@ -17,13 +17,15 @@ my %module_build_args = (
     "Kent Fredric <kentfredric\@gmail.com>"
   ],
   "dist_name" => "Dist-Zilla-Util-Git-Tags",
-  "dist_version" => "0.002000",
+  "dist_version" => "0.003000",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Util::Git::Tags",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
     "Carp" => 0,
+    "Dist::Zilla::Util::Git::Refs" => 0,
+    "Dist::Zilla::Util::Git::Refs::Ref" => 0,
     "Dist::Zilla::Util::Git::Wrapper" => 0,
     "Moose" => 0,
     "MooseX::LazyRequire" => 0,

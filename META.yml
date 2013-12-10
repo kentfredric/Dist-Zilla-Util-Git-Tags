@@ -20,12 +20,14 @@ name: Dist-Zilla-Util-Git-Tags
 provides:
   Dist::Zilla::Util::Git::Tags:
     file: lib/Dist/Zilla/Util/Git/Tags.pm
-    version: 0.002000
+    version: 0.003000
   Dist::Zilla::Util::Git::Tags::Tag:
     file: lib/Dist/Zilla/Util/Git/Tags/Tag.pm
-    version: 0.002000
+    version: 0.003000
 requires:
   Carp: 0
+  Dist::Zilla::Util::Git::Refs: 0
+  Dist::Zilla::Util::Git::Refs::Ref: 0
   Dist::Zilla::Util::Git::Wrapper: 0
   Moose: 0
   MooseX::LazyRequire: 0
@@ -37,7 +39,7 @@ resources:
   bugtracker: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags/issues
   homepage: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags
   repository: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags.git
-version: 0.002000
+version: 0.003000
 x_BuiltWith:
   modules:
     Carp: 1.32
@@ -84,7 +86,9 @@ x_BuiltWith:
     Dist::Zilla::Plugin::UploadToCPAN: 5.006
     Dist::Zilla::PluginBundle::Author::KENTNL: 2.007000
     Dist::Zilla::PluginBundle::Author::KENTNL::Lite: 1.7.2
-    Dist::Zilla::Util::Git::Wrapper: 0.001001
+    Dist::Zilla::Util::Git::Refs: 0.001000
+    Dist::Zilla::Util::Git::Refs::Ref: 0.001000
+    Dist::Zilla::Util::Git::Wrapper: 0.001002
     Git::Wrapper: 0.030
     Module::Build: 0.4203
     Moose: 2.1107

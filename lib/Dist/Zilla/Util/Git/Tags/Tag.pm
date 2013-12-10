@@ -7,26 +7,37 @@ BEGIN {
   $Dist::Zilla::Util::Git::Tags::Tag::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Tags::Tag::VERSION = '0.002000';
+  $Dist::Zilla::Util::Git::Tags::Tag::VERSION = '0.003000';
 }
 
 # ABSTRACT: A single tag object
 
 use Moose;
 
-
-has name => ( isa => Str    =>, required => 1, is => ro => );
-has git  => ( isa => Object =>, required => 1, is => ro => );
+extends 'Dist::Zilla::Util::Git::Refs::Ref';
 
 
-sub sha1 {
-  my ($self)  = @_;
-  my (@sha1s) = $self->git->rev_parse( $self->name );
-  if ( scalar @sha1s > 1 ) {
+sub new_from_Ref {
+  my ( $class, $object ) = @_;
+  if ( not $object->can('name') ) {
     require Carp;
-    return Carp::confess(q[Fatal: rev-parse tagname returned multiple values]);
+    return Carp::croak("Object $object does not respond to ->name, cannot Ref -> Tag");
   }
-  return shift @sha1s;
+  my $name = $object->name;
+  if ( $name =~ qr{\Arefs/tags/(.+\z)}msx ) {
+    return $class->new(
+      git  => $object->git,
+      name => $1,
+    );
+  }
+  require Carp;
+  Carp::croak("Path $name is not in refs/tags/*, cannot convert to Tag object");
+}
+
+
+sub refname {
+  my ($self) = @_;
+  return 'refs/tags/' . $self->name;
 }
 
 
@@ -59,11 +70,15 @@ Dist::Zilla::Util::Git::Tags::Tag - A single tag object
 
 =head1 VERSION
 
-version 0.002000
+version 0.003000
 
 =head1 METHODS
 
-=head2 C<sha1>
+=head2 C<new_from_Ref>
+
+Convert a Git::Refs::Ref to a Git::Tags::Tag
+
+    my $tag = $class->new_from_Ref( $ref );
 
 =head2 C<verify>
 

@@ -1,5 +1,15 @@
 Release history for Dist-Zilla-Util-Git-Tags
 
+0.003000 2013-12-10T01:03:02Z
+ [00 Major]
+ - Reimplemented in terms of Git::Refs
+ - This should mean the code now works on Git 1.0
+
+ [Dependencies::Stats]
+ - Dependencies changed since 0.002000, see Changes.deps{,.all,.dev} for
+   details
+ - runtime: +2
+
 0.002000 2013-12-09T05:36:42Z
  [Dependencies::Noteworthy]
  - Use Test::Fatal
