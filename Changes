@@ -2,6 +2,13 @@ Release history for Dist-Zilla-Util-Git-Tags
 
 {{$NEXT}}
  [00 Major]
+ - Some Attributes provided by DZUR:MG
+
+ [Dependencies::Stats]
+ - Dependencies changed since 0.003000, see Changes.deps{,.all,.dev} for
+   details
+ - runtime: +1 -2
+ - test: +2
 
  [Tests]
  - Fix tests to work on Git 1.4
