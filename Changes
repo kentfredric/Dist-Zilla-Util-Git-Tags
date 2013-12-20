@@ -1,6 +1,8 @@
 Release history for Dist-Zilla-Util-Git-Tags
 
 {{$NEXT}}
+
+0.004000 2013-12-20T14:00:44Z
  [00 Major]
  - Some Attributes provided by DZUR:MG
 
