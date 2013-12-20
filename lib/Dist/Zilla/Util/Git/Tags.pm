@@ -6,7 +6,7 @@ package Dist::Zilla::Util::Git::Tags;
 # ABSTRACT: Extract all tags from a repository
 
 use Moose;
-use MooseX::LazyRequire;
+with 'Dist::Zilla::UtilRole::MaybeGit';
 
 =head1 SYNOPSIS
 
@@ -28,31 +28,13 @@ Namely, each tag returned is a tag object, and you can view tag properties with 
 
 =cut
 
-=attr C<git>
-
-A Git::Wrapper ( or compatible ) repository.
-
-Auto-Built from C<zilla> with L<< C<::Util::Git::Wrapper>|Dist::Zilla::Util::Git::Wrapper >>
-
-=attr C<zilla>
-
-A Dist::Zilla instance. Mandatory unless you passed C<git>
-
 =attr C<refs>
 
 A Dist::Zilla::Util::Git::Refs instance, auto-built if not specified.
 
 =cut
 
-has 'git'   => ( isa => Object =>, is => ro =>, lazy_build    => 1 );
-has 'zilla' => ( isa => Object =>, is => ro =>, lazy_required => 1 );
-has 'refs'  => ( isa => Object =>, is => ro =>, lazy_build    => 1 );
-
-sub _build_git {
-  my ($self) = @_;
-  require Dist::Zilla::Util::Git::Wrapper;
-  return Dist::Zilla::Util::Git::Wrapper->new( zilla => $self->zilla );
-}
+has 'refs' => ( isa => Object =>, is => ro =>, lazy_build => 1 );
 
 sub _build_refs {
   my ($self) = @_;
