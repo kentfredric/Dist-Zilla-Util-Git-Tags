@@ -17,7 +17,7 @@ my %module_build_args = (
     "Kent Fredric <kentfredric\@gmail.com>"
   ],
   "dist_name" => "Dist-Zilla-Util-Git-Tags",
-  "dist_version" => "0.003000",
+  "dist_version" => "0.004000",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Util::Git::Tags",
   "recommends" => {},

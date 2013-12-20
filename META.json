@@ -107,11 +107,11 @@
    "provides" : {
       "Dist::Zilla::Util::Git::Tags" : {
          "file" : "lib/Dist/Zilla/Util/Git/Tags.pm",
-         "version" : "0.003000"
+         "version" : "0.004000"
       },
       "Dist::Zilla::Util::Git::Tags::Tag" : {
          "file" : "lib/Dist/Zilla/Util/Git/Tags/Tag.pm",
-         "version" : "0.003000"
+         "version" : "0.004000"
       }
    },
    "release_status" : "stable",
@@ -126,7 +126,7 @@
          "web" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags"
       }
    },
-   "version" : "0.003000",
+   "version" : "0.004000",
    "x_BuiltWith" : {
       "modules" : {
          "Carp" : "1.32",
