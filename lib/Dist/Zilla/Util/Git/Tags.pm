@@ -6,25 +6,17 @@ BEGIN {
   $Dist::Zilla::Util::Git::Tags::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Tags::VERSION = '0.003000';
+  $Dist::Zilla::Util::Git::Tags::VERSION = '0.004000';
 }
 
 # ABSTRACT: Extract all tags from a repository
 
 use Moose;
-use MooseX::LazyRequire;
+with 'Dist::Zilla::UtilRole::MaybeGit';
 
 
 
-has 'git'   => ( isa => Object =>, is => ro =>, lazy_build    => 1 );
-has 'zilla' => ( isa => Object =>, is => ro =>, lazy_required => 1 );
-has 'refs'  => ( isa => Object =>, is => ro =>, lazy_build    => 1 );
-
-sub _build_git {
-  my ($self) = @_;
-  require Dist::Zilla::Util::Git::Wrapper;
-  return Dist::Zilla::Util::Git::Wrapper->new( zilla => $self->zilla );
-}
+has 'refs' => ( isa => Object =>, is => ro =>, lazy_build => 1 );
 
 sub _build_refs {
   my ($self) = @_;
@@ -126,7 +118,7 @@ Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 =head1 VERSION
 
-version 0.003000
+version 0.004000
 
 =head1 SYNOPSIS
 
@@ -184,16 +176,6 @@ A C<List> of L<< C<::Tags::Tag> objects|Dist::Zilla::Util::Git::Tags::Tag >> tha
     $tag_finder->tags_for_rev( $sha1_or_commitish_etc );
 
 =head1 ATTRIBUTES
-
-=head2 C<git>
-
-A Git::Wrapper ( or compatible ) repository.
-
-Auto-Built from C<zilla> with L<< C<::Util::Git::Wrapper>|Dist::Zilla::Util::Git::Wrapper >>
-
-=head2 C<zilla>
-
-A Dist::Zilla instance. Mandatory unless you passed C<git>
 
 =head2 C<refs>
 

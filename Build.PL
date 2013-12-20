@@ -17,7 +17,7 @@ my %module_build_args = (
     "Kent Fredric <kentfredric\@gmail.com>"
   ],
   "dist_name" => "Dist-Zilla-Util-Git-Tags",
-  "dist_version" => "0.003000",
+  "dist_version" => "0.004000",
   "license" => "perl",
   "module_name" => "Dist::Zilla::Util::Git::Tags",
   "recommends" => {},
@@ -26,9 +26,8 @@ my %module_build_args = (
     "Carp" => 0,
     "Dist::Zilla::Util::Git::Refs" => 0,
     "Dist::Zilla::Util::Git::Refs::Ref" => 0,
-    "Dist::Zilla::Util::Git::Wrapper" => 0,
+    "Dist::Zilla::UtilRole::MaybeGit" => 0,
     "Moose" => 0,
-    "MooseX::LazyRequire" => 0,
     "perl" => "5.008",
     "strict" => 0,
     "utf8" => 0,
@@ -36,8 +35,10 @@ my %module_build_args = (
   },
   "script_files" => [],
   "test_requires" => {
+    "Dist::Zilla::Util::Git::Wrapper" => 0,
     "Git::Wrapper" => 0,
     "Path::Tiny" => 0,
+    "Sort::Versions" => 0,
     "Test::Fatal" => 0,
     "Test::More" => "1.001002"
   }
@@ -45,9 +46,11 @@ my %module_build_args = (
 
 
 my %fallback_build_requires = (
+  "Dist::Zilla::Util::Git::Wrapper" => 0,
   "Git::Wrapper" => 0,
   "Module::Build" => "0.4203",
   "Path::Tiny" => 0,
+  "Sort::Versions" => 0,
   "Test::Fatal" => 0,
   "Test::More" => "1.001002"
 );

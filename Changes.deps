@@ -1,4 +1,16 @@
-0.003000
+0.004000
+ [Added / runtime requires]
+ - Dist::Zilla::UtilRole::MaybeGit
+
+ [Added / test requires]
+ - Dist::Zilla::Util::Git::Wrapper
+ - Sort::Versions
+
+ [Removed / runtime requires]
+ - Dist::Zilla::Util::Git::Wrapper
+ - MooseX::LazyRequire
+
+0.003000 2013-12-10T01:03:02Z
  [Added / runtime requires]
  - Dist::Zilla::Util::Git::Refs
  - Dist::Zilla::Util::Git::Refs::Ref

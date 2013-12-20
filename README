@@ -2,7 +2,7 @@ NAME
     Dist::Zilla::Util::Git::Tags - Extract all tags from a repository
 
 VERSION
-    version 0.003000
+    version 0.004000
 
 SYNOPSIS
     This tool basically gives a more useful interface around
@@ -57,14 +57,6 @@ METHODS
         $tag_finder->tags_for_rev( $sha1_or_commitish_etc );
 
 ATTRIBUTES
-  "git"
-    A Git::Wrapper ( or compatible ) repository.
-
-    Auto-Built from "zilla" with "::Util::Git::Wrapper"
-
-  "zilla"
-    A Dist::Zilla instance. Mandatory unless you passed "git"
-
   "refs"
     A Dist::Zilla::Util::Git::Refs instance, auto-built if not specified.
 

@@ -3,9 +3,11 @@ abstract: 'Extract all tags from a repository'
 author:
   - 'Kent Fredric <kentfredric@gmail.com>'
 build_requires:
+  Dist::Zilla::Util::Git::Wrapper: 0
   Git::Wrapper: 0
   Module::Build: 0.4203
   Path::Tiny: 0
+  Sort::Versions: 0
   Test::Fatal: 0
   Test::More: 1.001002
 configure_requires:
@@ -20,17 +22,16 @@ name: Dist-Zilla-Util-Git-Tags
 provides:
   Dist::Zilla::Util::Git::Tags:
     file: lib/Dist/Zilla/Util/Git/Tags.pm
-    version: 0.003000
+    version: 0.004000
   Dist::Zilla::Util::Git::Tags::Tag:
     file: lib/Dist/Zilla/Util/Git/Tags/Tag.pm
-    version: 0.003000
+    version: 0.004000
 requires:
   Carp: 0
   Dist::Zilla::Util::Git::Refs: 0
   Dist::Zilla::Util::Git::Refs::Ref: 0
-  Dist::Zilla::Util::Git::Wrapper: 0
+  Dist::Zilla::UtilRole::MaybeGit: 0
   Moose: 0
-  MooseX::LazyRequire: 0
   perl: 5.008
   strict: 0
   utf8: 0
@@ -39,7 +40,7 @@ resources:
   bugtracker: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags/issues
   homepage: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags
   repository: https://github.com/kentfredric/Dist-Zilla-Util-Git-Tags.git
-version: 0.003000
+version: 0.004000
 x_BuiltWith:
   modules:
     Carp: 1.32
@@ -88,14 +89,15 @@ x_BuiltWith:
     Dist::Zilla::PluginBundle::Author::KENTNL::Lite: 1.7.2
     Dist::Zilla::Util::Git::Refs: 0.001000
     Dist::Zilla::Util::Git::Refs::Ref: 0.001000
-    Dist::Zilla::Util::Git::Wrapper: 0.001002
+    Dist::Zilla::Util::Git::Wrapper: 0.003000
+    Dist::Zilla::UtilRole::MaybeGit: 0.003000
     Git::Wrapper: 0.030
     Module::Build: 0.4203
     Moose: 2.1107
-    MooseX::LazyRequire: 0.10
-    Path::Tiny: 0.047
+    Path::Tiny: 0.051
     Pod::Coverage::TrustPod: 0.100003
-    Test::CPAN::Changes: 0.26
+    Sort::Versions: 1.5
+    Test::CPAN::Changes: 0.27
     Test::CPAN::Meta: 0.23
     Test::Fatal: 0.013
     Test::Kwalitee: 1.17
